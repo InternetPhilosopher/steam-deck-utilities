@@ -6,7 +6,7 @@ mkdir -p "$HOME/.cryo_utilities" &>/dev/null
 cd "$HOME/.cryo_utilities" || exit 1
 
 # Download checksum to compare with local binary, if present
-wget https://github.com/CryoByte33/steam-deck-utilities/releases/download/latest/cu.md5 -O "$HOME/.cryo_utilities/cu.md5" 2>&1
+curl https://github.com/CryoByte33/steam-deck-utilities/releases/download/latest/cu.md5 -O "$HOME/.cryo_utilities/cu.md5" 2>&1
 sleep 1
 if md5sum -c --quiet cu.md5; then
   zenity --info --text="No update necessary!" --width=300
