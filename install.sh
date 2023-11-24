@@ -27,13 +27,13 @@ rm -f "$HOME/.cryo_utilities/cryo_utilities" &>/dev/null
 # Attempt to download the binary 3 times.
 for i in {1..3}; do
   # Download binary
-  wget https://github.com/CryoByte33/steam-deck-utilities/releases/download/latest/cryo_utilities -O "$HOME/.cryo_utilities/cryo_utilities" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="Downloading CU Binary, attempt $i of 3..." --auto-close --width=500
+  curl https://github.com/CryoByte33/steam-deck-utilities/releases/download/latest/cryo_utilities -O "$HOME/.cryo_utilities/cryo_utilities" 2>&1 | sed -u 's/.* \([0-9]\+%\)\ \+\([0-9.]\+.\) \(.*\)/\1\n# Downloading at \2\/s, ETA \3/' | zenity --progress --title="Downloading CU Binary, attempt $i of 3..." --auto-close --width=500
 
   # Start a loop testing if zenity is running, and if not kill wget (allows for cancel to work)
   RUNNING=0
   while [ $RUNNING -eq 0 ]; do
     if [ -z "$(pidof zenity)" ]; then
-      pkill wget
+      pkill curl
       RUNNING=1
     fi
     sleep 0.1
@@ -58,14 +58,14 @@ rm -f cu.md5 &>/dev/null
 rm -f "$HOME/.cryo_utilities/launcher.sh" &>/dev/null
 
 # Install launcher script
-wget https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/launcher.sh -O "$HOME/.cryo_utilities/launcher.sh"
+curl https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/launcher.sh -O "$HOME/.cryo_utilities/launcher.sh"
 chmod +x "$HOME/.cryo_utilities/launcher.sh"
 
 # Remove old icon
 rm -f "$HOME/.cryo_utilities/cryo-utilities.png" &>/dev/null
 
 # Install Icon
-wget https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/cmd/cryoutilities/Icon.png -O "$HOME/.cryo_utilities/cryo-utilities.png"
+curl https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/cmd/cryoutilities/Icon.png -O "$HOME/.cryo_utilities/cryo-utilities.png"
 xdg-icon-resource install cryo-utilities.png --size 64
 
 # Create Desktop icons
